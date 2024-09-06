@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "ES2019",
+      "module": "commonjs",
+      "outDir": "dist",
+      "rootDirs": ["src", "tests"],
+      "strict": true,
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "skipLibCheck": true,
+      "types": ["node"],
+      "baseUrl": "src",
+      "paths": {
+        "@/*": ["*"],
+        "@/tests/*": ["../tests/*"]
+      },
+      "strictPropertyInitialization": false
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+  }
+  
