@@ -1,6 +1,5 @@
-import { HttpResponse } from "../contracts";
+import { HttpResponse } from '../contracts'
 
 export interface Middleware<T = any> {
-    handle: (httpRequest: T) => Promise<HttpResponse>
-  }
-  
+  handle: (httpRequest: T) => Promise<HttpResponse>
+}

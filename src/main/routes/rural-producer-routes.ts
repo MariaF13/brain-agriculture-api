@@ -5,8 +5,5 @@ import { makeAddRuralProducerController } from '@/main/factories/application/con
 
 export default (router: Router): void => {
   // Rota para adicionar uma nova categoria de equipamento
-  router.post(
-    `/${RURAL_PRODUCERS}`,
-    adapt(makeAddRuralProducerController())
-  )
+  router.post(`/${RURAL_PRODUCERS}`, adapt(makeAddRuralProducerController()))
 }

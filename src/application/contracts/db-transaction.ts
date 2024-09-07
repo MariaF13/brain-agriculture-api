@@ -5,8 +5,8 @@
 // - `rollback`: Desfaz as alterações feitas na transação em caso de erro.
 
 export interface DbTransaction {
-    openTransaction: () => Promise<void>
-    closeTransaction: () => Promise<void>
-    commit: () => Promise<void>
-    rollback: () => Promise<void>
+  openTransaction: () => Promise<void>
+  closeTransaction: () => Promise<void>
+  commit: () => Promise<void>
+  rollback: () => Promise<void>
 }

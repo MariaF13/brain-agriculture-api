@@ -4,6 +4,5 @@
 //   - `undefined` se a validação for bem-sucedida.
 
 export interface Validation {
-    validate: (input: any) => Error | undefined
+  validate: (input: any) => Error | undefined
 }
-  

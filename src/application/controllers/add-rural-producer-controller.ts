@@ -1,6 +1,11 @@
 import { Controller, Validation, HttpResponse } from '@/application/contracts'
 import { AddRuralProducer } from '@/domain/contracts/repos'
-import { badRequest, created, notAcceptable, serverError } from '../helpers/http-helper'
+import {
+  badRequest,
+  created,
+  notAcceptable,
+  serverError
+} from '../helpers/http-helper'
 
 export class AddRuralProducerController implements Controller {
   constructor(
@@ -8,14 +13,16 @@ export class AddRuralProducerController implements Controller {
     private readonly validation: Validation
   ) {}
 
-  async handle(request: AddRuralProducerController.Request): Promise<HttpResponse> {
+  async handle(
+    request: AddRuralProducerController.Request
+  ): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(request)
       if (error) {
         return badRequest(error)
       }
 
-      const { 
+      const {
         cpf,
         cnpj,
         name_rural_producer,
@@ -26,7 +33,7 @@ export class AddRuralProducerController implements Controller {
         arable_area_hectares,
         vegetation_area_hectares,
         planted_crops
-       } = request
+      } = request
 
       const result = await this.addRuralProducer.add({
         cpf,
@@ -51,15 +58,15 @@ export class AddRuralProducerController implements Controller {
 
 export namespace AddRuralProducerController {
   export type Request = {
-      cpf?: string 
-      cnpj?: string 
-      name_rural_producer: string
-      name_farm: string
-      city: string
-      state: string
-      total_area_hectares: number
-      arable_area_hectares: number
-      vegetation_area_hectares: number
-      planted_crops: number[]
+    cpf?: string
+    cnpj?: string
+    name_rural_producer: string
+    name_farm: string
+    city: string
+    state: string
+    total_area_hectares: number
+    arable_area_hectares: number
+    vegetation_area_hectares: number
+    planted_crops: number[]
   }
 }

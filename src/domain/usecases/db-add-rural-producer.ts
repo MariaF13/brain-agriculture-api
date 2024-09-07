@@ -1,4 +1,7 @@
-import { AddRuralProducer, LoadPlantedCropsById } from '@/domain/contracts/repos'
+import {
+  AddRuralProducer,
+  LoadPlantedCropsById
+} from '@/domain/contracts/repos'
 import { PlantedCrops } from '../entities'
 
 export class DbAddRuralProducer implements AddRuralProducer {
@@ -11,7 +14,9 @@ export class DbAddRuralProducer implements AddRuralProducer {
     const plantedCropsData = [] as PlantedCrops[]
     if (params.planted_crops) {
       for (const id of params.planted_crops as number[]) {
-        const planted_cropsData = await this.loadPlantedCropsByIdRepo.loadById(id)
+        const planted_cropsData = await this.loadPlantedCropsByIdRepo.loadById(
+          id
+        )
 
         if (!planted_cropsData)
           return {

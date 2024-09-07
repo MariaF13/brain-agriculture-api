@@ -1,9 +1,15 @@
 import { PgConnection } from './helpers/connection'
 import { PlantedCrops } from '@/domain/entities'
 import { PgPlantedCrops } from './entities'
-import { AddPlantedCrops, CheckPlantedCropsByName, LoadPlantedCropsById } from '@/domain/contracts/repos'
+import {
+  AddPlantedCrops,
+  CheckPlantedCropsByName,
+  LoadPlantedCropsById
+} from '@/domain/contracts/repos'
 
-export class PgPlantedCropsRepository implements AddPlantedCrops, CheckPlantedCropsByName, LoadPlantedCropsById {
+export class PgPlantedCropsRepository
+  implements AddPlantedCrops, CheckPlantedCropsByName, LoadPlantedCropsById
+{
   async add(data: AddPlantedCrops.Params): Promise<AddPlantedCrops.Result> {
     const pgPlantedCrops = new PgPlantedCrops()
     pgPlantedCrops.name_planted_crops = data.name_planted_crops

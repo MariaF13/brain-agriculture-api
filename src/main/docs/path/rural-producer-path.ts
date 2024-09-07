@@ -32,5 +32,5 @@ export const ruralProducerPath = {
         $ref: '#/components/serverError'
       }
     }
-  },
+  }
 }

@@ -1,6 +1,5 @@
 export type HttpResponse = {
-    statusCode: number
-    message: string
-    body?: any
-  }
-  
+  statusCode: number
+  message: string
+  body?: any
+}

@@ -4,7 +4,10 @@
 
 import { AddRuralProducer } from '@/domain/contracts/repos'
 import { DbAddRuralProducer } from '@/domain/usecases'
-import { PgPlantedCropsRepository, PgRuralProducerRepository } from '@/infra/repos/postgress'
+import {
+  PgPlantedCropsRepository,
+  PgRuralProducerRepository
+} from '@/infra/repos/postgress'
 
 export const makeDbAddRuralProducer = (): AddRuralProducer => {
   const pgRuralProducerRepository = new PgRuralProducerRepository()
