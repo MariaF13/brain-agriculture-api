@@ -1,12 +1,12 @@
 export const env = {
-    port: process.env.PORT ?? 3000,
+    port: process.env.PORT ?? 3001,
     postgres_host: process.env.POSTGRES_HOST ?? 'localhost',
     postgres_port: process.env.POSTGRES_PORT ?? 5432,
     postgres_username: process.env.POSTGRES_USERNAME ?? 'postgres',
     postgres_password: process.env.POSTGRES_PASSWORD ?? 'postgres',
-    postgres_database: process.env.POSTGRES_DATABASE ?? 'mydatabase',
-    postgres_synchronize: handleBoolean(process.env.POSTGRES_SYNCHRONIZE),
-    postgres_logging: handleBoolean(process.env.POSTGRES_LOGGING)
+    postgres_database: process.env.POSTGRES_DATABASE ?? 'brain-agriculture',
+    postgres_synchronize: handleBoolean(process.env.POSTGRES_SYNCHRONIZE, true),
+    postgres_logging: handleBoolean(process.env.POSTGRES_LOGGING, false)
   }
   
   function handleBoolean(

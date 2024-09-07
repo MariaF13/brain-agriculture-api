@@ -1,7 +1,6 @@
-version: '3.8'
-
 services:
   app:
+    container_name: brain-agriculture-api  # Nome específico do contêiner para o serviço 'app'
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,15 +13,16 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: brain-agriculture
 
   db:
+    container_name: brain-agriculture-db  # Nome específico do contêiner para o serviço 'db'
     image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: brain-agriculture
     ports:
       - "5432:5432"
     volumes:
