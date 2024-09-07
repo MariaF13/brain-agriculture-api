@@ -3,6 +3,7 @@ import { RURAL_PRODUCERS } from '@/utils/constants'
 import { Router } from 'express'
 import {
   makeAddRuralProducerController,
+  makeDeleteRuralProducerController,
   makeLoadRuralProducerByIdController,
   makeSetRuralProducerController
 } from '@/main/factories/application/controllers'
@@ -17,5 +18,9 @@ export default (router: Router): void => {
   router.get(
     `/${RURAL_PRODUCERS + ID}`,
     adapt(makeLoadRuralProducerByIdController())
+  )
+  router.delete(
+    `/${RURAL_PRODUCERS + ID}`,
+    adapt(makeDeleteRuralProducerController())
   )
 }

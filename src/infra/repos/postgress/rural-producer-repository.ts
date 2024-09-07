@@ -1,5 +1,6 @@
 import {
   AddRuralProducer,
+  DeleteRuralProducer,
   LoadRuralProducerById,
   SetRuralProducer
 } from '@/domain/contracts/repos'
@@ -8,7 +9,11 @@ import { PgConnection } from './helpers'
 import { RuralProducer } from '@/domain/entities'
 
 export class PgRuralProducerRepository
-  implements AddRuralProducer, LoadRuralProducerById, SetRuralProducer
+  implements
+    AddRuralProducer,
+    LoadRuralProducerById,
+    SetRuralProducer,
+    DeleteRuralProducer
 {
   async add(data: AddRuralProducer.Params): Promise<AddRuralProducer.Result> {
     const plantedCropsData = data.planted_crops as PgPlantedCrops[]
@@ -81,6 +86,37 @@ export class PgRuralProducerRepository
       id_rural_producer: ruralProducerToUpdate.id_rural_producer,
       message: 'Sucesso',
       statusCode: 200
+    }
+  }
+
+  async delete(
+    data: DeleteRuralProducer.Params
+  ): Promise<DeleteRuralProducer.Result> {
+    const pgRuralProducerRepo = PgConnection.getInstance()
+      .connect()
+      .getRepository(PgRuralProducer)
+
+    const ruralProducerToDelete = await pgRuralProducerRepo.findOne({
+      where: { id_rural_producer: +data.id_rural_producer },
+      relations: {
+        planted_crops: true
+      }
+    })
+
+    if (ruralProducerToDelete) {
+      await pgRuralProducerRepo.remove(ruralProducerToDelete)
+
+      return {
+        id_rural_producer: +data.id_rural_producer,
+        message: 'Produtor excluído com sucesso',
+        statusCode: 200
+      }
+    } else {
+      return {
+        id_rural_producer: 0,
+        message: 'Produtor não encontrado',
+        statusCode: 406
+      }
     }
   }
 }

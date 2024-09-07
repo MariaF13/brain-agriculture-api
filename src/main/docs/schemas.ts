@@ -1,5 +1,5 @@
-import { errorSchema } from './schema/error-schema'
-import { ruralProducerSchema } from './schema/rural-producer-schema'
+import { errorSchema } from './schemas/error-schema'
+import { ruralProducerSchema } from './schemas/'
 
 export default {
   error: errorSchema,

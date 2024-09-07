@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 import { PgPlantedCrops } from './planted-crops.entity'
 
@@ -47,4 +49,10 @@ export class PgRuralProducer {
     inverseJoinColumn: { name: 'id_planted_crops' } // Coluna que referencia as culturas plantadas
   })
   planted_crops: PgPlantedCrops[]
+
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
 }

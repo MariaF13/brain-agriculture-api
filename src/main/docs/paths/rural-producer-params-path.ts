@@ -69,5 +69,37 @@ export const ruralProducerParamsPath = {
         $ref: '#/components/serverError'
       }
     }
+  },
+  delete: {
+    tags: ['Rural Producer'],
+    summary: 'API para deletar dados do Produtor Rural',
+    parameters: [
+      {
+        in: 'path',
+        name: 'id',
+        description: 'ID do Produtor Rural a ser deletado',
+        required: true,
+        schema: {
+          type: 'number'
+        }
+      }
+    ],
+    responses: {
+      200: {
+        description: 'string'
+      },
+      204: {
+        description: 'Sem dados para exibir'
+      },
+      403: {
+        $ref: '#/components/forbidden'
+      },
+      404: {
+        $ref: '#/components/notFound'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
   }
 }

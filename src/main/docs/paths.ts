@@ -1,5 +1,5 @@
 import { RURAL_PRODUCERS } from '@/utils/constants'
-import { ruralProducerParamsPath, ruralProducerPath } from './path'
+import { ruralProducerParamsPath, ruralProducerPath } from './paths/'
 
 export default {
   [`/${RURAL_PRODUCERS}`]: ruralProducerPath,
