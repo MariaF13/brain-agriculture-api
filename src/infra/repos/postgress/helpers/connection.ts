@@ -1,29 +1,20 @@
-import { DataSource } from 'typeorm';
-import { env } from '@/main/config/env';
 
-export class PgConnection {
-  private static instance?: PgConnection;
-  private dataSource: DataSource;
+import { DbTransaction } from '@/application/contracts'
+import { QueryRunner, DataSource } from 'typeorm'
+import { env } from '@/main/config/env'
+import { ConnectionNotFoundError, TransactionNotFoundError } from './errors'
 
-  private constructor() {
-    this.dataSource = new DataSource({
-      type: 'postgres',
-      host: env.postgres_host,
-      port: +env.postgres_port,
-      username: env.postgres_username,
-      password: env.postgres_password,
-      database: env.postgres_database,
-      entities: ['src/**/*.entity.ts', 'dist/**/*.entity.js'],
-      synchronize: env.postgres_synchronize,
-      logging: env.postgres_logging
-    });
-  }
+export class PgConnection implements DbTransaction {
+  private static instance?: PgConnection
+  private query?: QueryRunner
+  private dataSource: DataSource
+
+  private constructor() {}
 
   static getInstance(): PgConnection {
-    if (PgConnection.instance === undefined) {
-      PgConnection.instance = new PgConnection();
-    }
-    return PgConnection.instance;
+    if (PgConnection.instance === undefined)
+      PgConnection.instance = new PgConnection()
+    return PgConnection.instance
   }
 
   connect(): DataSource {
@@ -44,16 +35,28 @@ export class PgConnection {
   }
 
   async disconnect(): Promise<void> {
-    try {
-      await this.dataSource.destroy();
-      console.log('Database connection closed.');
-    } catch (error) {
-      console.error('Error closing database connection:', error);
-      throw error;
-    }
+    if (this.dataSource === undefined) throw new ConnectionNotFoundError()
+    this.query = undefined
   }
 
-  getConnection(): DataSource {
-    return this.dataSource;
+  async openTransaction(): Promise<void> {
+    if (this.dataSource === undefined) throw new ConnectionNotFoundError()
+    this.query = this.dataSource.createQueryRunner()
+    await this.query.startTransaction()
+  }
+
+  async closeTransaction(): Promise<void> {
+    if (this.query === undefined) throw new TransactionNotFoundError()
+    await this.query.release()
+  }
+
+  async commit(): Promise<void> {
+    if (this.query === undefined) throw new TransactionNotFoundError()
+    await this.query.commitTransaction()
+  }
+
+  async rollback(): Promise<void> {
+    if (this.query === undefined) throw new TransactionNotFoundError()
+    await this.query.rollbackTransaction()
   }
 }
