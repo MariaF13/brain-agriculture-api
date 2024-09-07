@@ -1,10 +1,8 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn
 } from 'typeorm'
 import { PgPlantedCrops } from './planted-crops.entity'

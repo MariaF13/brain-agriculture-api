@@ -7,7 +7,7 @@ export const ruralProducerPath = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/addRuralProducer' // Referência ao schema atualizado
+            $ref: '#/schemas/ruralProducer' // Referência ao schema atualizado
           }
         }
       }

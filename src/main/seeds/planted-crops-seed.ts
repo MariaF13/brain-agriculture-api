@@ -1,10 +1,10 @@
-import { makeDbAddPlantedCrops } from '../factories/domain/usecases'
+import { makeDbAddPlantedCrops } from '@/main/factories/domain/usecases'
 
 export class PlantedCropsSeed {
   async handle(): Promise<void> {
     const addPlantedCrops = makeDbAddPlantedCrops()
 
-    const resultPackage = await addPlantedCrops.add({
+    await addPlantedCrops.add({
       name_planted_crops: 'Soja'
     })
     await addPlantedCrops.add({

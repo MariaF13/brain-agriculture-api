@@ -4,7 +4,7 @@
 
 import { Controller } from '@/application/contracts'
 import { DbTransactionController } from '@/application/decorators'
-import { makePgConnection } from '../../infra/repos/postgres/helpers'
+import { makePgConnection } from '@/main/factories/infra/repos/postgres/helpers/connection'
 
 export const makePgTransactionController = (
   controller: Controller

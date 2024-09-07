@@ -1,2 +1,5 @@
 export * from './add-rural-producer-controller-factory'
 export * from './add-rural-producer-validation-factory'
+export * from './set-rural-producer-controller-factory'
+export * from './set-rural-producer-validation-factory'
+export * from './load-rural-producer-by-id-controller-factory'

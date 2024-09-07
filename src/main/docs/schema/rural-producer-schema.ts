@@ -1,4 +1,4 @@
-export const addRuralProducerSchema = {
+export const ruralProducerSchema = {
   type: 'object',
   properties: {
     name_rural_producer: {
