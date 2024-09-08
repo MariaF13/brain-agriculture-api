@@ -4,11 +4,16 @@ import { PgPlantedCrops } from './entities'
 import {
   AddPlantedCrops,
   CheckPlantedCropsByName,
+  LoadPlantedCropsAll,
   LoadPlantedCropsById
 } from '@/domain/contracts/repos'
 
 export class PgPlantedCropsRepository
-  implements AddPlantedCrops, CheckPlantedCropsByName, LoadPlantedCropsById
+  implements
+    AddPlantedCrops,
+    CheckPlantedCropsByName,
+    LoadPlantedCropsById,
+    LoadPlantedCropsAll
 {
   async add(data: AddPlantedCrops.Params): Promise<AddPlantedCrops.Result> {
     const pgPlantedCrops = new PgPlantedCrops()
@@ -48,5 +53,19 @@ export class PgPlantedCropsRepository
     })
 
     return planted_cropsPg as PlantedCrops
+  }
+
+  async loadAll(): Promise<LoadPlantedCropsAll.Result> {
+    const pgPlantedCropsRepo = PgConnection.getInstance()
+      .connect()
+      .getRepository(PgPlantedCrops)
+
+    const plantedCrops = await pgPlantedCropsRepo.find({
+      select: {
+        id_planted_crops: true,
+        name_planted_crops: true
+      }
+    })
+    return plantedCrops as PlantedCrops[]
   }
 }

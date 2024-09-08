@@ -3,6 +3,7 @@ import {
   CROP,
   DASHBOARD,
   LAND_USE,
+  PAGEABLE,
   RURAL_PRODUCERS,
   STATE,
   TOTAL_FARMS
@@ -16,6 +17,7 @@ import {
   makeDashboardTotalFarmsController,
   makeDeleteRuralProducerController,
   makeLoadRuralProducerByIdController,
+  makeLoadRuralProducerPageableController,
   makeSetRuralProducerController
 } from '@/main/factories/application/controllers'
 import { ID } from '@/utils/constants-params'
@@ -27,6 +29,10 @@ export default (router: Router): void => {
     adapt(makeSetRuralProducerController())
   )
   router.get(
+    `/${RURAL_PRODUCERS + PAGEABLE}`,
+    adapt(makeLoadRuralProducerPageableController())
+  )
+  router.get(
     `/${RURAL_PRODUCERS + ID}`,
     adapt(makeLoadRuralProducerByIdController())
   )
@@ -36,22 +42,22 @@ export default (router: Router): void => {
   )
 
   router.get(
-    `/${DASHBOARD + TOTAL_FARMS}`,
+    `/${RURAL_PRODUCERS + DASHBOARD + TOTAL_FARMS}`,
     adapt(makeDashboardTotalFarmsController())
   )
 
   router.get(
-    `/${DASHBOARD + TOTAL_FARMS + STATE}`,
+    `/${RURAL_PRODUCERS + DASHBOARD + TOTAL_FARMS + STATE}`,
     adapt(makeDashboardFarmsByStateController())
   )
 
   router.get(
-    `/${DASHBOARD + TOTAL_FARMS + CROP}`,
+    `/${RURAL_PRODUCERS + DASHBOARD + TOTAL_FARMS + CROP}`,
     adapt(makeDashboardFarmsByCropController())
   )
 
   router.get(
-    `/${DASHBOARD + TOTAL_FARMS + LAND_USE}`,
+    `/${RURAL_PRODUCERS + DASHBOARD + TOTAL_FARMS + LAND_USE}`,
     adapt(makeDashboardLandUseController())
   )
 }

@@ -29,6 +29,10 @@ export default {
     {
       name: 'Rural Producer',
       description: 'APIs relacionadas ao Controle de produtores rurais'
+    },
+    {
+      name: 'Planted Crops',
+      description: 'APIs relacionadas ao Controle de culturas'
     }
   ],
   paths,

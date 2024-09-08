@@ -6,6 +6,7 @@ import {
   DashboardTotalFarms,
   DeleteRuralProducer,
   LoadRuralProducerById,
+  LoadRuralProducerPageable,
   SetRuralProducer
 } from '@/domain/contracts/repos'
 import { PgPlantedCrops, PgRuralProducer } from './entities'
@@ -21,7 +22,8 @@ export class PgRuralProducerRepository
     DashboardTotalFarms,
     DashboardFarmsByState,
     DashboardFarmsByCrop,
-    DashboardLandUse
+    DashboardLandUse,
+    LoadRuralProducerPageable
 {
   async add(data: AddRuralProducer.Params): Promise<AddRuralProducer.Result> {
     const plantedCropsData = data.planted_crops as PgPlantedCrops[]
@@ -204,4 +206,64 @@ export class PgRuralProducerRepository
       totalVegetationArea: parseFloat(result.totalVegetationArea)
     }
   }
+
+  async loadPageable(
+    params: LoadRuralProducerPageable.Params
+  ): Promise<LoadRuralProducerPageable.Result> {
+    const { pageable, filter } = params
+    const pgRuralProducerRepo = PgConnection.getInstance()
+      .connect()
+      .getRepository(PgRuralProducer)
+
+    const query = pgRuralProducerRepo
+      .createQueryBuilder(AliasPageableEnum.RURAL_PRODUCER)
+      .leftJoinAndSelect(
+        `${AliasPageableEnum.RURAL_PRODUCER}.planted_crops`,
+        AliasPageableEnum.PLANTED_CROPS
+      )
+
+    type QueryFilters = Record<string, string | undefined>
+
+    const queryFilters: QueryFilters = {
+      cpf: `${AliasPageableEnum.RURAL_PRODUCER}.cpf ilike '%' || :cpf || '%'`,
+      cnpj: `${AliasPageableEnum.RURAL_PRODUCER}.cnpj ilike '%' || :cnpj || '%'`,
+      name_rural_producer: `${AliasPageableEnum.RURAL_PRODUCER}.name_rural_producer ilike '%' || :name_rural_producer || '%'`,
+      name_farm: `${AliasPageableEnum.RURAL_PRODUCER}.name_farm ilike '%' || :name_farm || '%'`,
+      city: `${AliasPageableEnum.RURAL_PRODUCER}.city ilike '%' || :city || '%'`,
+      state: `${AliasPageableEnum.RURAL_PRODUCER}.state ilike '%' || :state || '%'`
+    }
+
+    if (Object.keys(filter).length > 0) {
+      for (const a of Object.keys(filter)) {
+        if (queryFilters[a] !== undefined) {
+          query.andWhere(queryFilters[a], filter)
+        }
+      }
+    }
+
+    const totalItems = await query.getCount()
+    const totalPages = Math.ceil(totalItems / pageable.size)
+
+    const results = await query
+      .orderBy(
+        `${AliasPageableEnum.RURAL_PRODUCER}.${pageable.orderBy}`,
+        pageable.order === 'ASC' ? 'ASC' : 'DESC'
+      )
+      .skip((pageable.pageNumber - 1) * pageable.size)
+      .take(pageable.size)
+      .getMany()
+
+    return {
+      items: results,
+      orderBy: pageable.orderBy,
+      order: pageable.order,
+      totalItems,
+      totalPages
+    }
+  }
+}
+
+export enum AliasPageableEnum {
+  PLANTED_CROPS = 'planted_crops',
+  RURAL_PRODUCER = 'rural_producer'
 }
