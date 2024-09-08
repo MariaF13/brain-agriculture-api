@@ -18,6 +18,7 @@ export class PgPlantedCropsRepository
   async add(data: AddPlantedCrops.Params): Promise<AddPlantedCrops.Result> {
     const pgPlantedCrops = new PgPlantedCrops()
     pgPlantedCrops.name_planted_crops = data.name_planted_crops
+    pgPlantedCrops.created_at = new Date()
 
     const saved = await PgConnection.getInstance()
       .connect()
@@ -63,7 +64,8 @@ export class PgPlantedCropsRepository
     const plantedCrops = await pgPlantedCropsRepo.find({
       select: {
         id_planted_crops: true,
-        name_planted_crops: true
+        name_planted_crops: true,
+        created_at: true
       }
     })
     return plantedCrops as PlantedCrops[]

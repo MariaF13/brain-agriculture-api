@@ -39,6 +39,7 @@ export class PgRuralProducerRepository
     pgRuralProducer.arable_area_hectares = data.arable_area_hectares
     pgRuralProducer.vegetation_area_hectares = data.vegetation_area_hectares
     pgRuralProducer.planted_crops = plantedCropsData
+    pgRuralProducer.created_at = new Date()
 
     const saved = await PgConnection.getInstance()
       .connect()
@@ -87,6 +88,7 @@ export class PgRuralProducerRepository
     ruralProducerToUpdate.vegetation_area_hectares =
       data.vegetation_area_hectares
     ruralProducerToUpdate.planted_crops = plantedCropsData
+    ruralProducerToUpdate.updated_at = new Date()
 
     await PgConnection.getInstance()
       .connect()

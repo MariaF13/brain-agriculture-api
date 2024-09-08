@@ -12,4 +12,6 @@ export class RuralProducer {
   arable_area_hectares: number
   vegetation_area_hectares: number
   planted_crops: PlantedCrops[] | number
+  created_at?: Date
+  updated_at?: Date
 }

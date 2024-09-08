@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm'
 import { PgRuralProducer } from './rural-producer.entity'
 
 @Entity({ name: 'planted_crops' })
@@ -11,4 +17,7 @@ export class PgPlantedCrops {
 
   @ManyToMany(() => PgRuralProducer, producer => producer.planted_crops)
   producers: PgRuralProducer[]
+
+  @CreateDateColumn()
+  created_at: Date
 }
