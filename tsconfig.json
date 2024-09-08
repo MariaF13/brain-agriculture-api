@@ -1,23 +1,22 @@
 {
-    "compilerOptions": {
-      "target": "ES2019",
-      "module": "commonjs",
-      "outDir": "dist",
-      "rootDirs": ["src", "tests"],
-      "strict": true,
-      "esModuleInterop": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "skipLibCheck": true,
-      "types": ["node"],
-      "baseUrl": "src",
-      "paths": {
-        "@/*": ["*"],
-        "@/tests/*": ["../tests/*"]
-      },
-      "strictPropertyInitialization": false
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDirs": ["src", "tests"],
+    "strict": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "types": ["node", "jest"],
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@/tests/*": ["../tests/*"]
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
-  }
-  
+    "strictPropertyInitialization": false
+  },
+  "include": ["src", "tests"],
+  "exclude": ["node_modules"]
+}
