@@ -1,3 +1,5 @@
 export const API = '/api/'
 export const SWAGGER = 'api-docs'
 export const RURAL_PRODUCERS = 'rural-producers'
+export const TOTAL_FARMS = '/total-farms'
+export const DASHBOARD = 'dashboard'

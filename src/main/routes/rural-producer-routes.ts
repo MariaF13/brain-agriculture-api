@@ -1,8 +1,9 @@
 import { adaptExpressRoute as adapt } from '@/main/adapters'
-import { RURAL_PRODUCERS } from '@/utils/constants'
+import { DASHBOARD, RURAL_PRODUCERS, TOTAL_FARMS } from '@/utils/constants'
 import { Router } from 'express'
 import {
   makeAddRuralProducerController,
+  makeDashboardTotalFarmsController,
   makeDeleteRuralProducerController,
   makeLoadRuralProducerByIdController,
   makeSetRuralProducerController
@@ -22,5 +23,10 @@ export default (router: Router): void => {
   router.delete(
     `/${RURAL_PRODUCERS + ID}`,
     adapt(makeDeleteRuralProducerController())
+  )
+
+  router.get(
+    `/${DASHBOARD + TOTAL_FARMS}`,
+    adapt(makeDashboardTotalFarmsController())
   )
 }

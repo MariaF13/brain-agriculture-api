@@ -1,5 +1,6 @@
 import {
   AddRuralProducer,
+  DashboardTotalFarms,
   DeleteRuralProducer,
   LoadRuralProducerById,
   SetRuralProducer
@@ -13,7 +14,8 @@ export class PgRuralProducerRepository
     AddRuralProducer,
     LoadRuralProducerById,
     SetRuralProducer,
-    DeleteRuralProducer
+    DeleteRuralProducer,
+    DashboardTotalFarms
 {
   async add(data: AddRuralProducer.Params): Promise<AddRuralProducer.Result> {
     const plantedCropsData = data.planted_crops as PgPlantedCrops[]
@@ -117,6 +119,23 @@ export class PgRuralProducerRepository
         message: 'Produtor não encontrado',
         statusCode: 406
       }
+    }
+  }
+
+  async loadTotalFarms(): Promise<DashboardTotalFarms.Result> {
+    const repository = PgConnection.getInstance()
+      .connect()
+      .getRepository(PgRuralProducer)
+
+    const result = await repository
+      .createQueryBuilder('rural_producer')
+      .select('COUNT(*)', 'totalFarms')
+      .addSelect('SUM(rural_producer.total_area_hectares)', 'totalAreaHectares')
+      .getRawOne()
+
+    return {
+      totalFarms: parseInt(result.totalFarms, 10),
+      totalAreaHectares: parseFloat(result.totalAreaHectares)
     }
   }
 }
