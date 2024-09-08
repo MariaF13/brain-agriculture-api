@@ -2,6 +2,7 @@ import { adaptExpressRoute as adapt } from '@/main/adapters'
 import {
   CROP,
   DASHBOARD,
+  LAND_USE,
   RURAL_PRODUCERS,
   STATE,
   TOTAL_FARMS
@@ -11,6 +12,7 @@ import {
   makeAddRuralProducerController,
   makeDashboardFarmsByCropController,
   makeDashboardFarmsByStateController,
+  makeDashboardLandUseController,
   makeDashboardTotalFarmsController,
   makeDeleteRuralProducerController,
   makeLoadRuralProducerByIdController,
@@ -46,5 +48,10 @@ export default (router: Router): void => {
   router.get(
     `/${DASHBOARD + TOTAL_FARMS + CROP}`,
     adapt(makeDashboardFarmsByCropController())
+  )
+
+  router.get(
+    `/${DASHBOARD + TOTAL_FARMS + LAND_USE}`,
+    adapt(makeDashboardLandUseController())
   )
 }
