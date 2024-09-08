@@ -7,7 +7,6 @@
     "dev": "ts-node-dev --respawn --transpile-only --clear -r dotenv/config --inspect=0.0.0.0:9229 src/main",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm t -- --watch",
-    "test:staged": "npm t -- --findRelatedTests",
     "test:coverage": "npm t -- --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:generate": "typeorm migration:generate",
