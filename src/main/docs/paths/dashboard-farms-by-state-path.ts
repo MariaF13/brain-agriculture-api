@@ -1,8 +1,7 @@
-export const dashboardTotalFarmsPath = {
+export const dashboardFarmsByStatePath = {
   get: {
     tags: ['Rural Producer'],
-    summary:
-      'API para listar o total de fazendas (em quantidade e em hectares)',
+    summary: 'API para listar o total de fazendas por estado',
     responses: {
       200: {
         description: 'Sucesso'

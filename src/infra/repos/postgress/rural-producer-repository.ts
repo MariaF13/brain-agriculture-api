@@ -1,5 +1,6 @@
 import {
   AddRuralProducer,
+  DashboardFarmsByState,
   DashboardTotalFarms,
   DeleteRuralProducer,
   LoadRuralProducerById,
@@ -15,7 +16,8 @@ export class PgRuralProducerRepository
     LoadRuralProducerById,
     SetRuralProducer,
     DeleteRuralProducer,
-    DashboardTotalFarms
+    DashboardTotalFarms,
+    DashboardFarmsByState
 {
   async add(data: AddRuralProducer.Params): Promise<AddRuralProducer.Result> {
     const plantedCropsData = data.planted_crops as PgPlantedCrops[]
@@ -137,5 +139,23 @@ export class PgRuralProducerRepository
       totalFarms: parseInt(result.totalFarms, 10),
       totalAreaHectares: parseFloat(result.totalAreaHectares)
     }
+  }
+
+  async loadFarmsByState(): Promise<DashboardFarmsByState.Result> {
+    const repository = PgConnection.getInstance()
+      .connect()
+      .getRepository(PgRuralProducer)
+
+    const results = await repository
+      .createQueryBuilder('rural_producer')
+      .select('rural_producer.state', 'state')
+      .addSelect('COUNT(*)', 'totalFarms')
+      .groupBy('rural_producer.state')
+      .getRawMany()
+
+    return results.map(result => ({
+      state: result.state,
+      totalFarms: parseInt(result.totalFarms, 10)
+    }))
   }
 }
